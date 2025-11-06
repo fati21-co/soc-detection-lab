@@ -1,7 +1,7 @@
 # Rapport d'incident – Simulation Discovery (MITRE ATT&CK)
 
 **Titre :** Simulation d'activités Discovery sur machine Windows via Caldera  
-**Date d’exécution :** YYYY-MM-DD  
+**Date d’exécution :** 2025-08-07  
 **Environnement :** SOC Detection Lab – Purple Team  
 **Rédigé par :** Fatima Zahra EL MOUCHARDAL
 
