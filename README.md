@@ -89,8 +89,6 @@ KALI (Caldera, File Server) ---> pfSense (LAN) ---> Windows Victime (Sandcat, Sy
 
 ## Topologie & IPs d'exemple
 
-> **Remplace** par tes IPs réelles dans scripts et README.
-
 - **pfSense (LAN)** : `192.168.100.1/24`  
 - **Kali (Caldera)** : `192.168.100.96`  
 - **Wazuh Manager / ELK** : `192.168.100.50`  
@@ -118,8 +116,6 @@ Assure-toi que les IPs sont statiques ou configurées en DHCP static mapping.
 - CPU : 4 vCPU (min)  
 - RAM : 8–12 GB (Elasticsearch gourmand)  
 - Disk : 60–100 GB (SSD recommandé)
-
-> Astuce : si ressources limitées, utilise le docker-compose officiel Wazuh (all-in-one) pour tests.
 
 ### Windows 10 (Victime)
 - CPU : 2 vCPU  
@@ -170,7 +166,6 @@ Assure-toi que les IPs sont statiques ou configurées en DHCP static mapping.
 
 ### Installer Caldera (si non installé)
 ```bash
-# Exemples rapides
 sudo apt update && sudo apt install -y python3 python3-venv python3-pip git
 git clone https://github.com/mitre/caldera.git ~/caldera
 cd ~/caldera
