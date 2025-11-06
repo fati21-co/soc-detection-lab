@@ -23,7 +23,7 @@
 14. [Reports & exemples (template)](#reports--exemples-template)  
 15. [Améliorations possibles](#améliorations-possibles)  
 16. [Sécurité, éthique & snapshots](#sécurité-éthique--snapshots)  
-17. [Annexes : commandes utiles & références rapides](#annexes--commandes-utiles--références-rapides)
+   
 
 ---
 
