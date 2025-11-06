@@ -302,7 +302,7 @@ Valider la chaîne détection pour TTP Discovery (System Info & Process Discover
 ## 📸 Captures d’écran (screenshots)
 
 ### ✅ 1) Connexion à l’interface Caldera
-<img src="screenshots/caldera-login.png" alt="Caldera login" width="800" />
+<img src="screenshots/Caldera-login.png" alt="Caldera login" width="800" />
 
 Ce tableau de bord permet d’accéder à l’ensemble des fonctionnalités de Caldera : gestion des agents, opérations, adversaires et modules.  
 Il s’agit du point d’entrée principal pour lancer des campagnes d’attaque simulées sur la machine Windows.
@@ -310,7 +310,7 @@ Il s’agit du point d’entrée principal pour lancer des campagnes d’attaque
 ---
 
 ### ✅ 2) Agent déployé sur la machine Windows
-<img src="screenshots/caldera-agent.png" alt="Caldera agent" width="800" />
+<img src="screenshots/Caldera-agent.png" alt="Caldera agent" width="800" />
 
 Après exécution du script PowerShell sur Windows, l’agent **Sandcat** apparaît dans l’interface Caldera.  
 Depuis cette page, on peut :
@@ -323,7 +323,7 @@ Depuis cette page, on peut :
 ---
 
 ### ✅ 3) Profil d’adversaire (Adversary Profile)
-<img src="screenshots/caldera-adversary.png" alt="Caldera adversary" width="800" />
+<img src="screenshots/Caldera-adversary.png" alt="Caldera adversary" width="800" />
 
 Cette page liste les TTPs MITRE ATT&CK qui seront exécutés lors de l’opération.  
 Dans notre cas : **win-discovery-minimal**, qui simule des actions de reconnaissance (T1082, T1057).  
