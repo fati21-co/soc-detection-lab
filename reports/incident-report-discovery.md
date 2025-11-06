@@ -129,7 +129,7 @@ Les alertes ont été correctement corrélées et présentées dans Kibana, avec
 Le pipeline de collecte fonctionne et peut servir de base pour des campagnes Red Team plus complexes.
 
 ✅ Objectif atteint.  
-🔧 Prochaines étapes : durcissement, enrichissement des règles, automatisation.
+
 
 ---
 
