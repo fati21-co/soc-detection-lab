@@ -227,13 +227,21 @@ Sandcat : vérifier processus (`tasklist` / `Get-Process`) et agent visible dans
 ## Exécution : déroulé recommandé (checklist)
 
 1- Vérifier connectivité réseau entre VMs (ping).
+
 2- Démarrer pfSense (interfaces & Suricata configurés).
+
 3- Démarrer Wazuh Manager (ELK).
+
 4- Démarrer Kali → Lancer Caldera (`python server.py --insecure`).
+
 5- Sur Windows (PowerShell admin) : lancer scripts (`deploy-sandcat`, `install-sysmon`, `install-wazuh-agent`).
+
 6- Dans Caldera : vérifier agent `alive` / `trusted` / `elevated`.
+
 7- Créer Operation → choisir `win-discovery-minimal` → Start.
+
 8- Sur Wazuh / Kibana : filtrer `agent.name:"fati"` / `rule.mitre.id` pour voir alertes.
+
 9- Capturer preuves (screenshots, export Kibana, export logs).
 
 ## Validation / preuves de détection
