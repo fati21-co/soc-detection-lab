@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Sysmon schemaversion="4.90">
+  <!--
+    sysmonconfig-export.xml
+    Adapted from SwiftOnSecurity / community configs
+    Purpose: useful default configuration for detection in a SOC lab
+    - Logs: ProcessCreate, NetworkConnect, ImageLoad, CreateRemoteThread, DriverLoad, FileCreateTime, Registry, DNS, PipeEvent
+    - Use in lab with Wazuh / ELK
+  -->
+
+  <!-- === Event Filtering === -->
+
+  <!-- Capture process create with command line and parent image -->
+  <EventFiltering>
+    <!-- Process Create -->
+    <ProcessCreate onmatch="include">
+      <!-- include everything, filter in SIEM or tune later -->
+    </ProcessCreate>
+
+    <!-- File creation time changes (useful for timestomping) -->
+    <FileCreateTime onmatch="include">
+      <Rule name="All FileCreateTime" />
+    </FileCreateTime>
+
+    <!-- Network connections -->
+    <NetworkConnect onmatch="include">
+      <!-- include all network connect events -->
+    </NetworkConnect>
+
+    <!-- Image load events (DLL loading) -->
+    <ImageLoad onmatch="include">
+      <!-- include all image loads; in noisy environments consider exclusions -->
+    </ImageLoad>
+
+    <!-- CreateRemoteThread (process injection) -->
+    <CreateRemoteThread onmatch="include" />
+
+    <!-- Driver load -->
+    <DriverLoad onmatch="include" />
+
+    <!-- RawAccessRead (disk access) -->
+    <RawAccessRead onmatch="include" />
+
+    <!-- DNS query events (if supported via ETW) -->
+    <DnsQuery onmatch="include" />
+
+    <!-- Pipe events (named pipes) -->
+    <PipeEvent onmatch="include" />
+
+    <!-- Registry events: important keys -->
+    <RegistryEvent onmatch="include">
+      <TargetObject condition="contains">Run</TargetObject>
+      <TargetObject condition="contains">RunOnce</TargetObject>
+      <TargetObject condition="contains">Services\</TargetObject>
+      <TargetObject condition="contains">Image File Execution Options</TargetObject>
+      <TargetObject condition="contains">AppInit_DLLs</TargetObject>
+    </RegistryEvent>
+
+    <!-- WMI events: include for detection of abuse -->
+    <WmiEvent onmatch="include" />
+
+    <!-- Process Access (dangerous for noise) -->
+    <ProcessAccess onmatch="include">
+      <!-- include to detect suspicious handle access -->
+    </ProcessAccess>
+
+    <!-- Clipboard change events (useful in some attacks) -->
+    <ClipboardChange onmatch="include" />
+
+  </EventFiltering>
+
+  <!-- === Hashing/Options === -->
+  <HashAlgorithms>md5,sha1,sha256,imphash</HashAlgorithms>
+
+  <!-- Log all events to make sure SIEM receives everything. Tune filtering in Wazuh/ELK. -->
+
+  <!-- === Additional recommended options / documentation notes === -->
+  <!--
+    - To reduce noise in long-term usage, add <ImageLoad> exclusions for common benign software
+    - Consider excluding browsers' common extensions or antivirus vendors if they flood with ImageLoad
+    - For script-heavy environments, tune ProcessCreate by excluding known benign script hosts if necessary
+  -->
+</Sysmon>
