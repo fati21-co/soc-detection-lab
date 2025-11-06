@@ -173,7 +173,15 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 # initial setup selon doc Caldera
-python server.py --insecure
+python server.py --insecure 
 
+### Lancer & utiliser UI
 
+Lancer : python server.py --insecure
+
+Accéder UI : http://<kali-ip>:8888
+
+Créer adversary : Adversaries → new profile (ex: win-discovery-minimal)
+
+Déployer agent Sandcat : Agents → Deploy → choisir platform Windows → copier script / télécharger binaire
 
