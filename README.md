@@ -285,3 +285,88 @@ Valider la chaîne détection pour TTP Discovery (System Info & Process Discover
 - Détection opérationnelle pour TTP testés.  
 - Recommandations : durcir Sysmon config, activer Script Block Logging pour PowerShell detection, affiner règles Suricata, documenter playbooks IR.
 
+## Améliorations possibles
+
+- Centraliser eve.json via Filebeat → ELK.
+- Ajouter signatures Suricata spécifiques à Sandcat / patterns HTTP.
+- Activer Script Block Logging & AMSI pour meilleure détection PowerShell.
+- Développer playbooks IR (isolation, kill process, IOC hunts).
+- Ajouter tests d’exfiltration et contrôles de prévention (DLP).
+
+## Sécurité, éthique & snapshots
+
+- Exécuter seulement dans un environnement contrôlé et isolé.
+- Prendre des snapshots avant modifications majeures (ex : pre-deploy, post-test-YYYYMMDD).
+- Ne pas publier de binaires malveillants en clair dans un repo public.
+
+## 📸 Captures d’écran (screenshots)
+
+### ✅ 1) Connexion à l’interface Caldera
+<img src="screenshots/caldera-login.png" alt="Caldera login" width="800" />
+
+Ce tableau de bord permet d’accéder à l’ensemble des fonctionnalités de Caldera : gestion des agents, opérations, adversaires et modules.  
+Il s’agit du point d’entrée principal pour lancer des campagnes d’attaque simulées sur la machine Windows.
+
+---
+
+### ✅ 2) Agent déployé sur la machine Windows
+<img src="screenshots/caldera-agent.png" alt="Caldera agent" width="800" />
+
+Après exécution du script PowerShell sur Windows, l’agent **Sandcat** apparaît dans l’interface Caldera.  
+Depuis cette page, on peut :
+
+✔ vérifier la connexion entre Caldera et la victime  
+✔ observer le statut (alive / dead)  
+✔ voir l’utilisateur, le PID et le niveau de privilège  
+✔ lancer des commandes ou opérations sur cette machine
+
+---
+
+### ✅ 3) Profil d’adversaire (Adversary Profile)
+<img src="screenshots/caldera-adversary.png" alt="Caldera adversary" width="800" />
+
+Cette page liste les TTPs MITRE ATT&CK qui seront exécutés lors de l’opération.  
+Dans notre cas : **win-discovery-minimal**, qui simule des actions de reconnaissance (T1082, T1057).  
+Chaque ligne correspond à une technique : commande exécutée, module utilisé, système visé, etc.
+
+---
+
+### ✅ 4) Graphe d’opération
+<img src="screenshots/operation-graph.png" alt="Operation graph" width="800" />
+
+Caldera génère un graphe permettant de visualiser l’exécution des actions adverses.  
+Ici, on voit le déroulement de l’opération, la machine compromise, et le statut des étapes (succès / échec).  
+C’est utile pour comprendre la chronologie d’attaque et valider que l’agent exécute correctement les TTP.
+
+---
+
+### ✅ 5) Sysmon installé et configuré sur Windows
+<img src="screenshots/sysmon-installed.png" alt="Sysmon installed" width="800" />
+
+Ce script installe **Sysmon** avec la configuration **SwiftOnSecurity**.  
+Le système commence alors à journaliser :
+
+- création de processus  
+- connexions réseau  
+- modifications système  
+- chargement de DLL
+
+Ces logs sont ensuite envoyés vers Wazuh pour corrélation et analyse.
+
+---
+
+### ✅ 6) Détection MITRE ATT&CK dans Kibana (via Wazuh + Sysmon)
+<img src="screenshots/kibana-mitre.png" alt="Kibana MITRE" width="800" />
+
+Cette interface affiche les alertes générées pendant l’attaque.  
+On peut voir :  
+✅ l’ID MITRE des techniques détectées  
+✅ la machine ciblée  
+✅ l’horodatage des événements  
+✅ la description de la menace
+
+Cela confirme que la détection fonctionne et que le SOC peut observer le comportement de l’attaquant.
+
+---
+
+
