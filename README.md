@@ -174,14 +174,71 @@ source venv/bin/activate
 pip install -r requirements.txt
 # initial setup selon doc Caldera
 python server.py --insecure 
-
+```  
 ### Lancer & utiliser UI
 
-Lancer : python server.py --insecure
+Lancer : `python server.py --insecure`
+Accéder UI : `http://<kali-ip>:8888`
+Créer adversary : `Adversaries → new profile` (ex: `win-discovery-minimal`)
+Déployer agent Sandcat : `Agents → Deploy → choisir platform Windows → copier script / télécharger binaire`
 
-Accéder UI : http://<kali-ip>:8888
+## VM Windows (victime) : scripts et déploiement
+### Scripts fournis (dans `powershell-scripts/`)
 
-Créer adversary : Adversaries → new profile (ex: win-discovery-minimal)
+`deploy-sandcat.ps1` — télécharge et lance l'agent Sandcat depuis Caldera.
+`install-sysmon.ps1` — télécharge Sysmon, applique une config (SwiftOnSecurity) et installe.
+`install-wazuh-agent.ps1` — installe l'agent Wazuh Windows et tente l’enregistrement auprès du manager.
+`run_all_lab_setup.ps1` — script maître qui exécute les étapes ci-dessus dans l’ordre.
+Important : exécuter PowerShell en mode Administrateur. Adapter les variables `$CalderaServer` et `$WazuhManagerIP` dans les scripts avant exécution.
 
-Déployer agent Sandcat : Agents → Deploy → choisir platform Windows → copier script / télécharger binaire
+### Exemple d’exécution (PowerShell admin)
 
+```bash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\deploy-sandcat.ps1 -CalderaServer "http://192.168.100.96:8888" -OutPath "C:\Users\Public\sandcat.exe"
+.\install-sysmon.ps1
+.\install-wazuh-agent.ps1 -WazuhManagerIP "192.168.100.50"
+```
+
+### Vérifications post-install
+
+Sysmon : Event Viewer → `Applications and Services Logs → Microsoft → Windows → Sysmon/Operational`.
+Wazuh Agent : vérifier sur Wazuh Manager la présence de l’agent (nom/ID).
+Sandcat : vérifier processus (`tasklist` / `Get-Process`) et agent visible dans Caldera.
+
+## Wazuh Manager & ELK : points clés
+### Installation (lab)
+
+- Option simple : docker-compose Wazuh all-in-one (doc officielle).
+- Ou VM Ubuntu Server + installation native (Wazuh Manager, Elasticsearch, Kibana).
+
+### Vérifier :
+
+- Elasticsearch reachable (9200)
+- Kibana reachable (5601)
+- Wazuh Manager écoute agents (ports 1514/1515 selon config)
+
+### Mapping & dashboards
+
+- Index pattern : `wazuh-*`
+- Importer dashboards MITRE / Wazuh si disponible.
+- Vérifier règles déclenchées via l’interface Wazuh / Kibana (filtrer `agent.name`).
+
+## Exécution : déroulé recommandé (checklist)
+
+1- Vérifier connectivité réseau entre VMs (ping).
+2- Démarrer pfSense (interfaces & Suricata configurés).
+3- Démarrer Wazuh Manager (ELK).
+4- Démarrer Kali → Lancer Caldera (`python server.py --insecure`).
+5- Sur Windows (PowerShell admin) : lancer scripts (`deploy-sandcat`, `install-sysmon`, `install-wazuh-agent`).
+6- Dans Caldera : vérifier agent `alive` / `trusted` / `elevated`.
+7- Créer Operation → choisir `win-discovery-minimal` → Start.
+8- Sur Wazuh / Kibana : filtrer `agent.name:"fati"` / `rule.mitre.id` pour voir alertes.
+9- Capturer preuves (screenshots, export Kibana, export logs).
+
+## Validation / preuves de détection
+
+- Caldera : Operations → statut `success` / `failed` / `collect` pour chaque ability.
+- Windows / Sysmon : événements `Process Create`, `Network Connect`, `Logon` dans Sysmon/Operational.
+- Wazuh / Kibana : hits (ex : plusieurs centaines), mapping MITRE ATT&CK visible, règles déclenchées (`rule.mitre.id` exemples : T1057, T1082…).
+- Suricata : événements réseau (HTTP, SMB, DNS) si EVE/forward configuré.
