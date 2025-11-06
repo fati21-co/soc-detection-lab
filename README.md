@@ -203,7 +203,9 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ### Vérifications post-install
 
 Sysmon : Event Viewer → `Applications and Services Logs → Microsoft → Windows → Sysmon/Operational`.
+
 Wazuh Agent : vérifier sur Wazuh Manager la présence de l’agent (nom/ID).
+
 Sandcat : vérifier processus (`tasklist` / `Get-Process`) et agent visible dans Caldera.
 
 ## Wazuh Manager & ELK : points clés
@@ -250,3 +252,36 @@ Sandcat : vérifier processus (`tasklist` / `Get-Process`) et agent visible dans
 - Windows / Sysmon : événements `Process Create`, `Network Connect`, `Logon` dans Sysmon/Operational.
 - Wazuh / Kibana : hits (ex : plusieurs centaines), mapping MITRE ATT&CK visible, règles déclenchées (`rule.mitre.id` exemples : T1057, T1082…).
 - Suricata : événements réseau (HTTP, SMB, DNS) si EVE/forward configuré.
+
+## Reports & exemples (template)
+
+# Rapport de détection – Discovery (Purple Team)
+
+## Contexte
+- Date : YYYY-MM-DD
+- Attacker : Kali (Caldera) @ 192.168.100.96
+- Victim : Windows 10 @ 192.168.100.120
+- SIEM : Wazuh Manager @ 192.168.100.50
+
+## Objectif
+Valider la chaîne détection pour TTP Discovery (System Info & Process Discovery).
+
+## TTP / MITRE
+- T1082 — System Information Discovery
+- T1057 — Process Discovery
+
+## Étapes exécutées
+1. Déploiement Sandcat (Caldera -> Windows)  
+2. Exécution adversary `win-discovery-minimal`  
+3. Collecte logs Sysmon, transmission Wazuh  
+4. Corrélation & visualisation Kibana
+
+## Observations
+- Abilities exécutées : System Information Discovery (success), Process Discovery (success)  
+- Wazuh alerts : `rule.id` / `description` / `mitre id`  
+- Kibana : X hits, timeline, screenshots
+
+## Conclusion & recommandations
+- Détection opérationnelle pour TTP testés.  
+- Recommandations : durcir Sysmon config, activer Script Block Logging pour PowerShell detection, affiner règles Suricata, documenter playbooks IR.
+
