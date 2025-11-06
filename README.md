@@ -258,7 +258,6 @@ Sandcat : vérifier processus (`tasklist` / `Get-Process`) et agent visible dans
 # Rapport de détection – Discovery (Purple Team)
 
 ## Contexte
-- Date : YYYY-MM-DD
 - Attacker : Kali (Caldera) @ 192.168.100.96
 - Victim : Windows 10 @ 192.168.100.120
 - SIEM : Wazuh Manager @ 192.168.100.50
