@@ -101,21 +101,21 @@ Assure-toi que les IPs sont statiques ou configurées en DHCP static mapping.
 ## VMs : ressources & configuration recommandée
 
 ### pfSense
-- CPU : 1–2 vCPU  
+- CPU : 1 vCPU  
 - RAM : 1–2 GB  
 - Disk : 8–16 GB  
 - Interfaces : WAN (NAT/Bridge) + LAN (Host-only/Internal)
 
 ### Kali (Attacker / Caldera)
 - CPU : 2 vCPU  
-- RAM : 4–6 GB  
+- RAM : 4 GB  
 - Disk : 40 GB  
 - Installer Python3, pip, virtualenv, Caldera
 
 ### Wazuh Manager + ELK (SIEM)
-- CPU : 4 vCPU (min)  
+- CPU : 4 vCPU  
 - RAM : 8–12 GB (Elasticsearch gourmand)  
-- Disk : 60–100 GB (SSD recommandé)
+- Disk : 60 GB (SSD recommandé)
 
 ### Windows 10 (Victime)
 - CPU : 2 vCPU  
