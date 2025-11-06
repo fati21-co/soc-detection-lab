@@ -63,7 +63,7 @@ KALI (Caldera, File Server) ---> pfSense (LAN) ---> Windows Victime (Sandcat, Sy
 │ ├── install-wazuh-agent.ps1
 │ └── run_all_lab_setup.ps1
 ├── configs/
-│ └── sysmonconfig-export.xml (optionnel: SwiftOnSecurity)
+│ └── sysmonconfig-export.xml 
 ├── reports/
 │ └── incident-report-discovery.md
 └── screenshots/
