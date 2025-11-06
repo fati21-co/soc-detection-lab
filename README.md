@@ -45,15 +45,15 @@ L’objectif : démontrer la chaîne complète **Simulation → Visibilité → 
 ---
 
 ## Architecture du laboratoire
-
+```
 KALI (Caldera, File Server) ---> pfSense (LAN) ---> Windows Victime (Sandcat, Sysmon, Wazuh Agent)
 |
 +--> Wazuh Manager (ELK / Kibana)
 |
 +--> (optionnel) Collector / Filebeat pour Suricata
-
+```
 ## Contenu du dépôt
-
+```
 / (root)
 ├── README.md
 ├── LICENSE
@@ -73,7 +73,7 @@ KALI (Caldera, File Server) ---> pfSense (LAN) ---> Windows Victime (Sandcat, Sy
 ├── operation-graph.png
 ├── sysmon-installed.png
 └── kibana-mitre.png
-
+```
 
 ---
 
