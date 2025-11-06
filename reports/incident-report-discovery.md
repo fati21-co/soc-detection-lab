@@ -57,7 +57,7 @@ L’adversaire utilisé dans Caldera : **win-discovery-minimal**
 
 ## 5. Détection & preuves
 
-### ✅ Sysmon
+### Sysmon
 Les événements suivants ont été observés :
 
 - `Event ID 1` — Process Create (powershell.exe, sandcat.exe)
@@ -69,7 +69,7 @@ Configuration utilisée : **sysmonconfig-export.xml** (base SwiftOnSecurity)
 
 ---
 
-### ✅ Wazuh & MITRE ATT&CK
+###  Wazuh & MITRE ATT&CK
 Les alertes suivantes ont été générées :
 
 | Timestamp | Agent | MITRE ID | Description |
@@ -85,7 +85,7 @@ Filtre : `agent.name:"fati"`
 
 ---
 
-### ✅ Kibana – Analyse visuelle
+### Kibana – Analyse visuelle
 
 - Histogramme des événements sur la timeline
 - Liste des règles déclenchées
